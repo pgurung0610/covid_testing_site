@@ -1,0 +1,17 @@
+{
+  "name": "112327165_112332848_34906308_covidtestingsite",
+  "version": "1.0.0",
+  "description": "CSE 316 Final Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Pratik Gurung, Oliver Liu, Jun Ho Lee",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  }
+}

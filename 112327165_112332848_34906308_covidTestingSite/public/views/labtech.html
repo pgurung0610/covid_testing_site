@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lab Employee Login</title>
+        <meta charset="utf-8">
+
+         <!-- Importing styling -->
+        <link rel="stylesheet" href="/css/labtech.css">
+        <!-- Importing custom Javascript -->
+        <script src="../js/labtech.js"></script>
+        <!-- Importing jQuery via Google CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <!-- Example of how to get a parameter passed in from the server-side via EJS: -->
+        <div>This is param1: <%= param1 %></div>
+
+        <!-- Example of how to use conditionals with a parameter passed in from the server-side via EJS: -->
+        <% if(param1) { %>
+            <div>This is param1: <%= param1 %></div>
+        <% } %>
+
+        <!-- Example of how to iterate through a parameter passed in from the server-side via EJS: -->
+        <% JSON.parse(param2).forEach( elem => { %>
+            <div>This is an element: <%= elem %></div>
+        <% }) %>
+
+        <!-- Can also access a parameter in the JavaScript: -->
+        <button onclick="if('<%= param1 %>') { example_function('<%= param1 %>', '<%= param2 %>'); }">
+            Example Button
+        </button>
+    </body>
+</html>
