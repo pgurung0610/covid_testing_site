@@ -5,13 +5,32 @@
         <meta charset="utf-8">
 
          <!-- Importing styling -->
-        <link rel="stylesheet" href="/css/labtech.css">
+        <link rel="stylesheet" href="../css/testCollection.css">
         <!-- Importing custom Javascript -->
-        <script src="../js/labtech.js"></script>
+        <script src="../js/testCollection.js"></script>
         <!-- Importing jQuery via Google CDN -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
 
     <body>
+        <h1>Test Collection</h1>
+        <form>
+            <label for="employeeID">Employee ID:</label>
+            <input type="text" id="employeeID" name="employeeID"><br><br>
+
+            <label for="testBarcode">Test barcode:</label>
+            <input type="text" id="testBarcode" name="testBarcode"><br><br>
+
+            <input onclick = addRow() type="submit" value="Add">
+        </form><br>
+
+        <table id = employees>
+            <tr>
+                <th>Employee ID</th>
+                <th>Test barcode</th>
+            </tr>
+            <tr>
+            </tr>
+        </table>
     </body>
 </html>

@@ -5,13 +5,23 @@
         <meta charset="utf-8">
 
          <!-- Importing styling -->
-        <link rel="stylesheet" href="/css/labtech.css">
+        <link rel="stylesheet" href="../css/employee.css">
         <!-- Importing custom Javascript -->
-        <script src="../js/labtech.js"></script>
+        <script src="../js/employee.js"></script>
         <!-- Importing jQuery via Google CDN -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
 
     <body>
+        <h1>Employee Login Page for Results</h1>
+        <form action = "/employeeHome" method = "GET" class = "" id = loginButton>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email"><br><br>
+
+            <label for="passcode">Password:</label>
+            <input type="text" id="passcode" name="passcode"><br><br>
+
+            <input type="submit" value="login">
+        </form>
     </body>
 </html>
