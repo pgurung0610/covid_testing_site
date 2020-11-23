@@ -5,7 +5,7 @@
         <meta charset="utf-8">
 
          <!-- Importing styling -->
-        <link rel="stylesheet" href="/css/labtech.css">
+        <link rel="stylesheet" href="../css/labtech.css">
         <!-- Importing custom Javascript -->
         <script src="../js/labtech.js"></script>
         <!-- Importing jQuery via Google CDN -->
@@ -13,22 +13,22 @@
     </head>
 
     <body>
-        <!-- Example of how to get a parameter passed in from the server-side via EJS: -->
-        <div>This is param1: <%= param1 %></div>
+        <h1>Login Page</h1>
+        <form method = "POST">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email"><br><br>
 
-        <!-- Example of how to use conditionals with a parameter passed in from the server-side via EJS: -->
-        <% if(param1) { %>
-            <div>This is param1: <%= param1 %></div>
-        <% } %>
+            <label for="passcode">Password:</label>
+            <input type="text" id="passcode" name="passcode"><br><br>
 
-        <!-- Example of how to iterate through a parameter passed in from the server-side via EJS: -->
-        <% JSON.parse(param2).forEach( elem => { %>
-            <div>This is an element: <%= elem %></div>
-        <% }) %>
-
-        <!-- Can also access a parameter in the JavaScript: -->
-        <button onclick="if('<%= param1 %>') { example_function('<%= param1 %>', '<%= param2 %>'); }">
-            Example Button
-        </button>
+            <form action = "/testCollection" method = "GET" class = "" id = loginCollector>
+                <input type="submit" value="Login Collector">
+            </form>
+            <form action = "/labHome" method = "GET" class = "" id = labLogin>
+                <input type="submit" value="Lab login">
+        </form>
+            
+            
+        </form>
     </body>
 </html>
