@@ -5,7 +5,7 @@
         <meta charset="utf-8">
 
          <!-- Importing styling -->
-        <link rel="stylesheet" href="/css/labtech.css">
+        <link rel="stylesheet" href="/css/wellTesting.css">
         <!-- Importing custom Javascript -->
         <script src="../js/labtech.js"></script>
         <!-- Importing jQuery via Google CDN -->
@@ -13,5 +13,45 @@
     </head>
 
     <body>
+        <h1>Well Testing</h1>
+        <form action="/labhome" method="GET" class="" id="home-button">
+            <input type="submit" value="Home">
+        </form>
+        <hr>
+        <form action="/wellTesting" id="addWellTest">
+            <label for="wellBarcode">Well Barcode: </label>
+            <input type="text" name="wellBarcode">
+            <br>
+            <label for="poolBarcode">Pool Barcode: </label>
+            <input type="text" name="poolBarcode">
+            <br>
+            <label for="Result">Result: </label>
+            <select name="Result" id="result">
+                <option value="inProgress">In Progress</option>
+                <option value="negative">Negative</option>
+                <option value="positive">Positive</option>
+            </select>
+            <br>
+            <input type="submit" value="Add">
+        
+        </form>
+
+        <hr>
+
+        <table id="wellTestingTable">
+            <tr>
+                <th>Well Barcode</th>
+                <th>Pool Barcode</th>
+                <th>Result</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>123</td>
+                <td>Positive</td>
+            </tr>
+        </table>
+        <br>
+        <button>Edit</button>
+        <button>Delete</button>
     </body>
 </html>
