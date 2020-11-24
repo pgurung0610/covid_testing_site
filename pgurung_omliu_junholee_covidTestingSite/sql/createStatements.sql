@@ -1,3 +1,6 @@
+-- Only include this first command if the database already exists, otherwise comment it out
+DROP DATABASE COVID_19_Testing;
+
 CREATE DATABASE COVID_19_Testing;
 
 USE COVID_19_Testing;
@@ -7,17 +10,15 @@ CREATE TABLE Employee (
     email VARCHAR(50), -- key
     firstName VARCHAR(50),
     lastName VARCHAR(50),
-    passcode VARCHAR(50),
+    password VARCHAR(50),
     PRIMARY KEY (employeeID),
     UNIQUE (email)
 );
 
 CREATE TABLE LabEmployee (
     labID VARCHAR(50),
-    email VARCHAR(50),
     password VARCHAR(50),
-    PRIMARY KEY (labID),
-    UNIQUE (email)
+    PRIMARY KEY (labID)
 );
 
 CREATE TABLE Pool (
