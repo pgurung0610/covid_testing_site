@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 const path = require('path');
+const expressSession = require('express-session');
 
 // Initializing Express App
 const app = express();
@@ -8,6 +9,13 @@ const app = express();
 // Configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Setting up handling of user sessions
+app.use(expressSession( {
+    secret: 'secret-key',
+    saveUninitialized: false,
+    resave: false
+} ));
 
 // Serving static folder
 app.use(express.static('public'));

@@ -14,21 +14,23 @@
 
     <body>
         <h1>Login Page</h1>
-        <form method = "POST">
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email"><br><br>
+        <form action="/labtech" method="POST" id="loginForm">
+            <label for="labID">Email:</label>
+            <input type="text" id="labID" name="labID">
+            <br><br>
 
-            <label for="passcode">Password:</label>
-            <input type="text" id="passcode" name="passcode"><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <br><br>
 
-            <form action = "/testCollection" method = "GET" class = "" id = loginCollector>
-                <input type="submit" value="Login Collector">
-            </form>
-            <form action = "/labHome" method = "GET" class = "" id = labLogin>
-                <input type="submit" value="Lab login">
-        </form>
-            
-            
+            <% if (error) { %>
+                <div id="errorMsg">
+                    <%= error %>
+                </div>
+                <br>
+            <% } %>
+
+            <input type="submit" id="labLogin" name="labLogin" value="Lab login">
         </form>
     </body>
 </html>

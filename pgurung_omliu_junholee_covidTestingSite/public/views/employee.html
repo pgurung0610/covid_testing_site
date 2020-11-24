@@ -14,14 +14,23 @@
 
     <body>
         <h1>Employee Login Page for Results</h1>
-        <form action = "/employeeHome" method = "GET" class = "" id = loginButton>
+        <form action = "/employee" method = "POST" id="loginForm">
             <label for="email">Email:</label>
-            <input type="text" id="email" name="email"><br><br>
+            <input type="email" id="email" name="email">
+            <br><br>
 
-            <label for="passcode">Password:</label>
-            <input type="text" id="passcode" name="passcode"><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <br><br>
 
-            <input type="submit" value="login">
+            <% if (error) { %>
+                <div id="errorMsg">
+                    <%= error %>
+                </div>
+                <br>
+            <% } %>
+
+            <input type="submit" value="Login" id="loginButton">
         </form>
     </body>
 </html>
