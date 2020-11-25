@@ -11,15 +11,28 @@
         <!-- Importing jQuery via Google CDN -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
-        <h1>Employee Home</h1>
-        <table>
-            <tr>
-                <th id = "collectionTime">Collection Date</th>
-                <th id = "result">Result</th>
-            </tr>
-            <tr>
-            </tr>
-        </table>
+
     <body>
+        
+        <h1 id="employeeHomeHeader">Employee Home</h1>
+
+        <table id="resultsTable">
+            <tr id="tableHeader">
+                <th id="collectionDateHeader">Collection Date</th>
+                <th id="resultHeader">Result</th>
+            </tr>
+
+            <% JSON.parse(results).forEach( (row) => { %>
+                <tr>
+                    <td class="collectionDateCell">
+                        <%= row['collectionDate'] %>
+                    </td>
+                    <td class="resultCell">
+                        <%= row['result'] %>
+                    </td>
+                </tr>
+            <% }); %>
+        </table>
+        
     </body>
 </html>
