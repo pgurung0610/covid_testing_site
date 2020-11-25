@@ -168,9 +168,51 @@ router.post('/employee', (req, res) => {
     }
 });
 
+function parseEmployeeTestResults(results) {
+    output = [];
+
+    results.forEach( (result, index) => {
+        row = {};
+
+        let collectionDate = result['collectionTime'];
+        collectionDate = ((collectionDate.getMonth() > 8) ? (collectionDate.getMonth() + 1) : ('0' + (collectionDate.getMonth() + 1))) + '/' + ((collectionDate.getDate() > 9) ? collectionDate.getDate() : ('0' + collectionDate.getDate())) + '/' + collectionDate.getFullYear();
+        let currResult = result['result'];
+        currResult = (currResult == 'positive' && currResult > 1) ? 'in progress' : currResult;
+
+        row['collectionDate'] = collectionDate;
+        row['result'] = currResult;
+
+        output.push(row);
+    });
+
+    return output;
+}
+
 router.get('/employeeHome', (req, res) => {
     if (req.session.user != null && req.session.user != {} && req.session.user.type == "employee") {
-        res.render(path.resolve('public/views/employeeHome.html'), { });
+        let employeeID = req.session.user['id'];
+        let query = `
+            SELECT ET.testBarcode, ET.collectionTime, WT1.result, PM_C.numTestBarcodes
+            FROM EmployeeTest ET, PoolMap PM1, WellTesting WT1,
+                (SELECT PM2.poolBarcode, COUNT(PM2.testBarcode) AS numTestBarcodes
+                FROM PoolMap PM2
+                GROUP BY PM2.poolBarcode) PM_C
+            WHERE ET.employeeID = '${employeeID}' AND ET.testBarcode = PM1.testBarcode AND PM1.poolBarcode = WT1.poolBarcode
+                AND PM1.poolBarcode = PM_C.poolBarcode AND (WT1.testingEndTime IS NULL OR WT1.testingEndTime =
+                    (SELECT MAX(WT2.testingEndTime)
+                    FROM WellTesting WT2, PoolMap PM3
+                    WHERE PM3.testBarcode = ET.testBarcode AND WT2.poolBarCode = PM3.poolBarcode))
+            ORDER BY CASE WHEN ET.collectionTime is null then 1 else 0 end, ET.collectionTime DESC;`;
+        conn.query(query, (err, result) => {
+            if (err) {
+                console.log(`Could not get employee's test results: ${err}`);
+                res.render(path.resolve('public/views/employeeHome.html'), { results: "[]" });
+            } else {
+                let results = parseEmployeeTestResults(result);
+                // console.log(`Got employee's test results: ${JSON.stringify(results)}`);
+                res.render(path.resolve('public/views/employeeHome.html'), { results: JSON.stringify(results) });
+            }
+        });
     } else {
         res.redirect('/employee');
     }

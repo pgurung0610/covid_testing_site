@@ -42,18 +42,20 @@ CREATE TABLE EmployeeTest (
 );
 
 CREATE TABLE PoolMap (
-    testBarcode VARCHAR(50),
     poolBarcode VARCHAR(50),
+    testBarcode VARCHAR(50),
+    PRIMARY KEY (poolBarcode, testBarcode),
     FOREIGN KEY (testBarcode) REFERENCES EmployeeTest(testBarcode),
     FOREIGN KEY (poolBarcode) REFERENCES Pool(poolBarcode)
 );
 
 CREATE TABLE WellTesting (
-    poolBarcode VARCHAR(50),
     wellBarcode VARCHAR(50),
+    poolBarcode VARCHAR(50),
     testingStartTime DATETIME,
     testingEndTime DATETIME,
     result VARCHAR(11) DEFAULT "in progress",
-    FOREIGN KEY (poolBarcode) REFERENCES Pool(poolBarcode),
-    FOREIGN KEY (wellBarcode) REFERENCES Well(wellBarcode)
+    PRIMARY KEY (wellBarcode, poolBarcode),
+	FOREIGN KEY (wellBarcode) REFERENCES Well(wellBarcode),
+    FOREIGN KEY (poolBarcode) REFERENCES Pool(poolBarcode)
 );
