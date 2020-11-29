@@ -83,68 +83,78 @@ router.get('/testCollection', (req, res) => {
      }
  });
 
+
+//logger.log('Hi, Paul')
 router.get('/poolMapping', (req, res) => {
-    if (req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee") {
-        poolMappingView(res)
-    } else {
-        res.redirect('/labtech');
-    }
+    //let poolMapping_express = require('./poolMapping_express.js')
+    let poolMapping_express = require('./server/poolMapping_express.js')
+    poolMapping_express.writeGet(req, res)
+    // if (!(req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee")) {
+    //     poolMappingView(res)
+    //     var logger = require('./server/poolMapping_express.js')
+    //     logger.log('Hi, Paul 2345')
+    // } else {
+    //     res.redirect('/labtech');
+    // }
 });
 
 router.post('/poolMapping', (req, res) => {
-    if (req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee") {
-        submitPool(req, res)
-        poolMappingView(res)
-    } else {
-        res.redirect('/labtech');
-    }
+    //let poolMapping_express = require('./poolMapping_express.js')
+    let poolMapping_express = require('./server/poolMapping_express.js')
+    poolMapping_express.writePost(req, res)
+    // if (req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee") {
+    //     submitPool(req, res)
+    //     poolMappingView(res)
+    // } else {
+    //     res.redirect('/labtech');
+    // }
 });
 
-function submitPool (req) {
-    let body = req.body
-    let poolBarcode = body.poolBarcode
-    let testBarcodes = Object.values(body).filter(val => val != null && val != poolBarcode && val != '')
-    conn.query(`INSERT INTO Pool VALUES (${poolBarcode});`, (err, result) => {
-        if (err) {
-            console.log(err)
-        }
-    })
-    //inserting poolmaps into database
-    testBarcodes.forEach(tb => 
-        conn.query(`INSERT INTO PoolMap VALUES (${tb}, ${poolBarcode});`, (err, result) => {
-            if (err) {
-                console.log(err)
-            }
-        }
-    ))
-}
+// function submitPool (req) {
+//     let body = req.body
+//     let poolBarcode = body.poolBarcode
+//     let testBarcodes = Object.values(body).filter(val => val != null && val != poolBarcode && val != '')
+//     conn.query(`INSERT INTO Pool VALUES (${poolBarcode});`, (err, result) => {
+//         if (err) {
+//             console.log(err)
+//         }
+//     })
+//     //inserting poolmaps into database
+//     testBarcodes.forEach(tb => 
+//         conn.query(`INSERT INTO PoolMap VALUES (${tb}, ${poolBarcode});`, (err, result) => {
+//             if (err) {
+//                 console.log(err)
+//             }
+//         }
+//     ))
+// }
 
-function poolMappingView(res){
-    conn.query(`SELECT * FROM poolmap`, (error, result) => {
-        if (error){
-            console.log(error)
-            res.render(path.resolve('public/views/poolMapping.html'), {poolmap: ''})
-        }
-        let tableData = []
-        for(i = 0; i < result.length; i++){
-            let found = false
-            for(j = 0; j < tableData.length; j++){
-                if(result[i].poolBarcode == tableData[j].poolBarcode){
-                    tableData[j].testBarcodes.push(result[i].testBarcode)
-                    found = true
-                    break
-                }
-            }
-            if(!found){
-                tableData.push({
-                    poolBarcode: result[i].poolBarcode,
-                    testBarcodes: [result[i].testBarcode]
-                })
-            }
-        }
-        res.render(path.resolve('public/views/poolMapping.html'), {poolmap: tableData})
-    })
-}
+// function poolMappingView(res){
+//     conn.query(`SELECT * FROM poolmap`, (error, result) => {
+//         if (error){
+//             console.log(error)
+//             res.render(path.resolve('public/views/poolMapping.html'), {poolmap: ''})
+//         }
+//         let tableData = []
+//         for(i = 0; i < result.length; i++){
+//             let found = false
+//             for(j = 0; j < tableData.length; j++){
+//                 if(result[i].poolBarcode == tableData[j].poolBarcode){
+//                     tableData[j].testBarcodes.push(result[i].testBarcode)
+//                     found = true
+//                     break
+//                 }
+//             }
+//             if(!found){
+//                 tableData.push({
+//                     poolBarcode: result[i].poolBarcode,
+//                     testBarcodes: [result[i].testBarcode]
+//                 })
+//             }
+//         }
+//         res.render(path.resolve('public/views/poolMapping.html'), {poolmap: tableData})
+//     })
+// }
 
 
 router.get('/wellTesting', (req, res) => {
