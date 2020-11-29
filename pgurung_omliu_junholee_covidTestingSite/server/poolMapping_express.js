@@ -2,19 +2,15 @@ const path = require('path');
 const conn = require('../connection.js');
 
 function writeGet(req, res) {
-    console.log('write get called')
-    if (!(req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee")) {
+    if ((req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee")) {
         poolMappingView(res)
-        //var logger = require('./server/poolMapping_express.js')
-        //logger.log('Hi, Paul 2345')
     } else {
         res.redirect('/labtech');
     }
 }
 
 function writePost(req, res) {
-    console.log('write post called')
-    if (!(req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee")) {
+    if ((req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee")) {
         submitPool(req, res)
         poolMappingView(res)
     } else {
