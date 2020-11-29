@@ -4,7 +4,6 @@ const conn = require('./connection.js');
 
 const router = express.Router();
 
-// Routes for Lab Employees
 router.get('/labtech', (req, res) => {
     req.session.destroy();
     console.log("Logged out");
@@ -81,37 +80,23 @@ router.get('/testCollection', (req, res) => {
  });
 
 router.get('/poolMapping', (req, res) => {
-    if (req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee") {
-        res.render(path.resolve('public/views/poolMapping.html'), { });
-    } else {
-        res.redirect('/labtech');
-    }
+    let poolMapping_express = require('./server/poolMapping_express.js')
+    poolMapping_express.writeGet(req, res)
 });
 
 router.post('/poolMapping', (req, res) => {
-    if (req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee") {
-        let body = req.body;
-        res.render(path.resolve('public/views/poolMapping.html'), { });
-    } else {
-        res.redirect('/labtech');
-    }
+    let poolMapping_express = require('./server/poolMapping_express.js')
+    poolMapping_express.writePost(req, res)
 });
 
 router.get('/wellTesting', (req, res) => {
-    if (req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee") {
-        res.render(path.resolve('public/views/wellTesting.html'), { });
-    } else {
-        res.redirect('/labtech');
-    }
+    let wellTesting_express = require('./server/wellTesting_express.js')
+    wellTesting_express.writeGet(req, res)
 });
 
 router.post('/wellTesting', (req, res) => {
-    if (req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee") {
-        let body = req.body;
-        res.render(path.resolve('public/views/wellTesting.html'), { });
-    } else {
-        res.redirect('/labtech');
-    }
+    let wellTesting_express = require('./server/wellTesting_express.js')
+    wellTesting_express.writePost(req, res)
 });
 
 // Routes for Employees

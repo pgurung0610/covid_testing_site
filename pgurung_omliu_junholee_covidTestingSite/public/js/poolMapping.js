@@ -1,12 +1,10 @@
-
 let inputs = 0
-
 
 function addRow() {
     inputs++
 
     let newLI = document.createElement("li")
-    
+
     let newInput = document.createElement("input")
     newInput.setAttribute("type", "text")
     newInput.setAttribute("name", `b${inputs}`)
@@ -19,17 +17,11 @@ function addRow() {
         removeElement(newLI)
     })
 
-    
     newLI.appendChild(newInput)
     newLI.appendChild(newBtn)
 
     var lst = document.getElementById("barcodesList")
     lst.appendChild(newLI)
-//     var newPara = document.createElement("p");
-// var content = document.createTextNode("This is a new paragraph.");
-// newPara.appendChild(content);
-// var divElem = document.getElementById("theDiv");
-// divElem.appendChild(newPara);
 }
 
 for(i = 0; i < 2; i++)
@@ -43,3 +35,4 @@ document.getElementById("addRow").addEventListener('click', (evt)=>{
     evt.preventDefault()
     addRow()
 })
+

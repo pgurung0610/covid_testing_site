@@ -18,40 +18,43 @@
             <input type="submit" value="Home">
         </form>
         <hr>
-        <form action="/wellTesting" id="addWellTest">
+        <form action="/wellTesting" method = "POST" id="addWellTest">
             <label for="wellBarcode">Well Barcode: </label>
             <input type="text" name="wellBarcode">
             <br>
             <label for="poolBarcode">Pool Barcode: </label>
             <input type="text" name="poolBarcode">
             <br>
-            <label for="Result">Result: </label>
-            <select name="Result" id="result">
-                <option value="inProgress">In Progress</option>
-                <option value="negative">Negative</option>
-                <option value="positive">Positive</option>
+            <label for="result">Result: </label>
+            <select name="result" id="result">
+                <option value="in progress">in progress</option>
+                <option value="negative">negative</option>
+                <option value="positive">positive</option>
             </select>
             <br>
             <input type="submit" value="Add">
-        
         </form>
-
         <hr>
-
         <table id="wellTestingTable">
             <tr>
                 <th>Well Barcode</th>
                 <th>Pool Barcode</th>
                 <th>Result</th>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>123</td>
-                <td>Positive</td>
-            </tr>
+            <% if (data) { %>
+                <% for(i = 0; i < data.length; i++){%>
+                    <tr>
+                        <td><%= data[i].wellBarcode %></td>
+                        <td><%= data[i].poolBarcode %></td>
+                        <td><%= data[i].result %></td>
+                    </tr>
+                <%}%>
+                <br>
+            <% } %>
         </table>
         <br>
         <button>Edit</button>
         <button>Delete</button>
+    
     </body>
 </html>
