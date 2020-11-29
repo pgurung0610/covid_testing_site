@@ -1,3 +1,5 @@
 node_modules/
 
+connection.js
+
 .DS_Store

@@ -13,12 +13,12 @@
     </head>
 
     <body>
-        <h1>Pool Mappinig</h1>
-        <form action="/labhome" method="GET" class="" id="homeButton">
+        <h1>Pool Mappinig (updated 11/24)</h1>
+        <form action="/labhome" method="get" class="" id="homeButton">
             <input type="submit" value="Home">
         </form>
         <hr>
-        <form action="/poolMapping" id="submitPool">
+        <form action="/poolMapping" method="POST" id="submitPool">
             <label for="poolBarcode">Pool Barcode: </label>
             <input type="text" name="poolBarcode">
             <p>Test Barcodes: </p>
@@ -44,12 +44,34 @@
                 <th>Pool Barcode</th>
                 <th>Test Barcodes</th>
             </tr>
-            <tr>
-                <td>123</td>
-                <td>456</td>
-            </tr>
+            <% if (poolmap) { %>
+                <% for(i = 0; i < poolmap.length; i++){%>
+                    <tr>
+                        <td><%= poolmap[i].poolBarcode %></td>
+                        <% let testBarcodesString = ''
+                            for(j = 0; j < poolmap[i].testBarcodes.length; j++){
+                                testBarcodesString += `${poolmap[i].testBarcodes[j]}`
+                                if(j < poolmap[i].testBarcodes.length - 1)
+                                testBarcodesString += `, `
+                            }
+                                
+                         %> 
+                        <td><%=testBarcodesString%><td>
+                    </tr>
+                <%}%>
+                <br>
+            <% } %>
+            
         </table>
         <button>Edit Pool</button>
         <button>Delete Pool</button>
+
+        <div>
+            <% testStr = 'sfhesriuhr'%> 
+            
+            
+
+
+        </div>
     </body>
 </html>
