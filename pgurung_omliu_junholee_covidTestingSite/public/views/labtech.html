@@ -13,9 +13,9 @@
     </head>
 
     <body>
-        <h1>Login Page</h1>
+        <h1>Lab Login Page</h1>
         <form action="/labtech" method="POST" id="loginForm">
-            <label for="labID">Email:</label>
+            <label for="labID">Lab ID:</label>
             <input type="text" id="labID" name="labID">
             <br><br>
 
@@ -31,6 +31,8 @@
             <% } %>
 
             <input type="submit" id="labLogin" name="labLogin" value="Lab login">
+            <br><br>
+            <a href = "/employee">Are you an Employee?</a>
         </form>
     </body>
 </html>
