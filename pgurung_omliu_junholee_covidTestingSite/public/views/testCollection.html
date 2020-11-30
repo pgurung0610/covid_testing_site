@@ -14,14 +14,14 @@
 
     <body>
         <h1>Test Collection</h1>
-        <form>
+        <form action="/testCollection" method="POST">
             <label for="employeeID">Employee ID:</label>
-            <input type="text" id="employeeID" name="employeeID"><br><br>
+            <input type="text" name="employeeID"><br><br>
 
             <label for="testBarcode">Test barcode:</label>
-            <input type="text" id="testBarcode" name="testBarcode"><br><br>
+            <input type="text" name="testBarcode"><br><br>
 
-            <input onclick = addRow() type="submit" value="Add">
+            <input type="submit" value="Add">
         </form><br>
 
         <table id = employees>
@@ -29,8 +29,15 @@
                 <th>Employee ID</th>
                 <th>Test barcode</th>
             </tr>
-            <tr>
-            </tr>
+            
+            <% if (collection) { %>
+                <% for(i = 0; i < collection.length; i++){ %>
+                    <tr>
+                        <td><%= collection[i].employeeID %></td>
+                        <td><%= collection[i].testBarcode %></td>
+                    </tr>
+                <% } %>
+            <% } %>
         </table>
     </body>
 </html>

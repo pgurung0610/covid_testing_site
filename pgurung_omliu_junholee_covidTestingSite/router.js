@@ -65,20 +65,64 @@ router.get('/labHome', (req, res) => {
 
 router.get('/testCollection', (req, res) => {
     if (req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee") {
-         res.render(path.resolve('public/views/testCollection.html'), { });
-     } else {
-         res.redirect('/labtech');
-     }
+        testCollectionView(req, res);
+    } else {
+        res.redirect('/labtech');
+    }
  });
  
- router.post('/testCollection', (req, res) => {
-     if (req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee") {
-         let body = req.body;
-         res.render(path.resolve('public/views/testCollection.html'), { });
-     } else {
-         res.redirect('/labtech');
-     }
+router.post('/testCollection', (req, res) => {
+    if (req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee") {
+        addCollection(req, res)
+        testCollectionView(req, res);
+    } else {
+        res.redirect('/labtech');
+    }
  });
+
+function testCollectionView(req, res){
+    conn.query(`SELECT employeeID, testBarcode 
+    FROM employeeTest ORDER BY CAST(employeeID as SIGNED INTEGER);`, (err, result) => {
+        if (err){
+            console.log(err);
+            res.render(path.resolve('public/views/testCollection.html'), {});
+        }   // invalid query check
+        let collection = [];    // Array initialized [for objects]
+        for(i = 0; i < result.length; i++){
+            collection.push({   // add objects
+                employeeID: result[i].employeeID,
+                testBarcode: result[i].testBarcode
+            })
+        }
+        res.render(path.resolve('public/views/testCollection.html'), {collection});
+        // collection variable will be used in the testCollection.html
+    })
+}
+
+function addCollection(req, res){
+    // get labID
+    let labID = req.session.user.id;
+
+    // taken from HTML form
+    let body = req.body;
+    let employeeID = body.employeeID;
+    let testBarcode = body.testBarcode;
+
+    // get time in the form of 'yyyy-mm-dd hh:mm:ss' "2020-11-14 11:21:00";
+    var d = new Date();
+    var year = d.getFullYear();
+    var month = d.getMonth() + 1; 
+    var day = d.getDate();
+    var s = d.getSeconds();
+    var m = d.getMinutes();
+    var h = d.getHours();
+    
+    var DATETIME = "'" + year + "-" + month + "-" + day + " " + h + ":" + m + ":" + s + "'";
+
+    conn.query(`INSERT INTO employeeTest VALUES (${testBarcode}, ${employeeID}, ${DATETIME}, ${labID});`, (err, result) => {
+        if (err) {console.log(err)}
+    })
+}
 
 router.get('/poolMapping', (req, res) => {
     if (req.session.user != null && req.session.user != {} && req.session.user.type == "labEmployee") {
