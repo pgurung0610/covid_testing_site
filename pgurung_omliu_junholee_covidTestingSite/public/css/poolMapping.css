@@ -1,7 +1,7 @@
-table, th, td {
-    border: 1px solid black;
-  }
-body {
-    padding: 2.5%;
-    line-height: 40px;
+.testBarcodesContainer {
+  padding: 2%;
+}
+
+.delete-btn {
+  margin: 5px;
 }

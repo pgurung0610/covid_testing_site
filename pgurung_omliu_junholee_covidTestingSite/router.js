@@ -118,7 +118,7 @@ function addCollection(req, res){
     
     var DATETIME = "'" + year + "-" + month + "-" + day + " " + h + ":" + m + ":" + s + "'";
 
-    conn.query(`INSERT INTO employeeTest VALUES (${testBarcode}, ${employeeID}, ${DATETIME}, ${labID});`, (err, result) => {
+    conn.query(`INSERT INTO employeeTest VALUES ('${testBarcode}', '${employeeID}', ${DATETIME}, '${labID}');`, (err, result) => {
         if (err) {console.log(err)}
     })
 }
@@ -206,7 +206,8 @@ function parseEmployeeTestResults(results) {
         let collectionDate = result['collectionTime'];
         collectionDate = ((collectionDate.getMonth() > 8) ? (collectionDate.getMonth() + 1) : ('0' + (collectionDate.getMonth() + 1))) + '/' + ((collectionDate.getDate() > 9) ? collectionDate.getDate() : ('0' + collectionDate.getDate())) + '/' + collectionDate.getFullYear();
         let currResult = result['result'];
-        currResult = (currResult == 'positive' && currResult > 1) ? 'in progress' : currResult;
+        let numTestBarcodes = result['numTestBarcodes'];
+        currResult = (currResult == 'positive' && numTestBarcodes > 1) ? 'positive candidate' : currResult;
 
         row['collectionDate'] = collectionDate;
         row['result'] = currResult;
@@ -221,16 +222,15 @@ router.get('/employeeHome', (req, res) => {
     if (req.session.user != null && req.session.user != {} && req.session.user.type == "employee") {
         let employeeID = req.session.user['id'];
         let query = `
-            SELECT ET.testBarcode, ET.collectionTime, WT1.result, PM_C.numTestBarcodes
-            FROM EmployeeTest ET, PoolMap PM1, WellTesting WT1,
-                (SELECT PM2.poolBarcode, COUNT(PM2.testBarcode) AS numTestBarcodes
-                FROM PoolMap PM2
-                GROUP BY PM2.poolBarcode) PM_C
-            WHERE ET.employeeID = '${employeeID}' AND ET.testBarcode = PM1.testBarcode AND PM1.poolBarcode = WT1.poolBarcode
-                AND PM1.poolBarcode = PM_C.poolBarcode AND (WT1.testingEndTime IS NULL OR WT1.testingEndTime =
-                    (SELECT MAX(WT2.testingEndTime)
-                    FROM WellTesting WT2, PoolMap PM3
-                    WHERE PM3.testBarcode = ET.testBarcode AND WT2.poolBarCode = PM3.poolBarcode))
+            SELECT ET.testBarcode, ET.collectionTime, WT.result, PM_C.numTestBarcodes
+            FROM EmployeeTest ET, PoolMap PM, WellTesting WT, MostRecentTimes MRT,
+                (
+                    SELECT PM2.poolBarcode, COUNT(PM2.testBarcode) AS numTestBarcodes
+                    FROM PoolMap PM2
+                    GROUP BY PM2.poolBarcode
+                ) PM_C
+            WHERE ET.employeeID = '${employeeID}' AND ET.testBarcode = PM.testBarcode AND PM.poolBarcode = PM_C.poolBarCode AND PM.poolBarcode = WT.poolBarcode
+                AND (WT.testingEndTime IS NULL OR WT.testingEndTime = MRT.testingEndTime) AND MRT.testBarcode = ET.testBarcode
             ORDER BY CASE WHEN ET.collectionTime is null then 1 else 0 end, ET.collectionTime DESC;`;
         conn.query(query, (err, result) => {
             if (err) {

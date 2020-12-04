@@ -16,6 +16,9 @@ function addRow() {
         evt.preventDefault()
         removeElement(newLI)
     })
+    newBtn.classList.add("btn")
+    newBtn.classList.add("btn-danger")
+    newBtn.classList.add("delete-btn")
 
     newLI.appendChild(newInput)
     newLI.appendChild(newBtn)

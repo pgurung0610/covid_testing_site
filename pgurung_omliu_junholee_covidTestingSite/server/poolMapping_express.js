@@ -22,14 +22,14 @@ function submitPool (req) {
     let body = req.body
     let poolBarcode = body.poolBarcode
     let testBarcodes = Object.values(body).filter(val => val != null && val != poolBarcode && val != '')
-    conn.query(`INSERT INTO Pool VALUES (${poolBarcode});`, (err, result) => {
+    conn.query(`INSERT INTO Pool VALUES ('${poolBarcode}');`, (err, result) => {
         if (err) {
             console.log(err)
         }
     })
     //inserting poolmaps into database
     testBarcodes.forEach(tb => 
-        conn.query(`INSERT INTO PoolMap VALUES (${tb}, ${poolBarcode});`, (err, result) => {
+        conn.query(`INSERT INTO PoolMap VALUES ('${poolBarcode}', '${tb}');`, (err, result) => {
             if (err) {
                 console.log(err)
             }
