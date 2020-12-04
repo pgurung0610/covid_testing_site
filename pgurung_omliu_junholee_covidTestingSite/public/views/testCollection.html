@@ -4,8 +4,10 @@
         <title>Test Collection</title>
         <meta charset="utf-8">
 
-         <!-- Importing styling -->
+        <!-- Importing styling -->
         <link rel="stylesheet" href="../css/testCollection.css">
+        <!-- Importing Bootstrap -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <!-- Importing custom Javascript -->
         <script src="../js/testCollection.js"></script>
         <!-- Importing jQuery via Google CDN -->
@@ -13,31 +15,74 @@
     </head>
 
     <body>
-        <h1>Test Collection</h1>
-        <form action="/testCollection" method="POST">
-            <label for="employeeID">Employee ID:</label>
-            <input type="text" name="employeeID"><br><br>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/labHome">Lab Employee</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/labHome">Home <span class="sr-only">(current)</span></a>
+                    </li>
 
-            <label for="testBarcode">Test barcode:</label>
-            <input type="text" name="testBarcode"><br><br>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/testCollection">Test Collection <span class="sr-only">(current)</span></a>
+                    </li>
 
-            <input type="submit" value="Add">
-        </form><br>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/poolMapping">Pool Mapping <span class="sr-only">(current)</span></a>
+                    </li>
 
-        <table id = employees>
-            <tr>
-                <th>Employee ID</th>
-                <th>Test barcode</th>
-            </tr>
-            
-            <% if (collection) { %>
-                <% for(i = 0; i < collection.length; i++){ %>
-                    <tr>
-                        <td><%= collection[i].employeeID %></td>
-                        <td><%= collection[i].testBarcode %></td>
-                    </tr>
-                <% } %>
-            <% } %>
-        </table>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/wellTesting">Well Testing <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+
+                <form class="form-inline my-2 my-lg-0" action="/labTech" method="GET">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log out</button>
+                </form>
+            </div>
+        </nav>
+
+        <div class="testingContainer">
+            <div class="container">
+                <div class="p-2">
+                    <form action="/testCollection" method="POST" id="submitPool">
+                        <div class="form-group">
+                            <label for="employeeID">Employee ID:</label>
+                            <input class="form-control" type="text" name="employeeID">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="testBarcode">Test barcode:</label>
+                            <input class="form-control" type="text" name="testBarcode">
+                        </div>
+
+                        <input class="btn btn-outline-primary" type="submit" value="Add">
+                    </form>
+                    <hr>
+
+                    <table class="table table-bordered" id="employees">
+                        <thead class="thead-dark">
+                            <th>Employee ID</th>
+                            <th>Test barcode</th>
+                        </thead>
+                        
+                        <% if (collection) { %>
+                            <% for(i = 0; i < collection.length; i++){ %>
+                                <tr>
+                                    <td><%= collection[i].employeeID %></td>
+                                    <td><%= collection[i].testBarcode %></td>
+                                </tr>
+                            <% } %>
+                        <% } %>
+                    </table>
+
+                    <button class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

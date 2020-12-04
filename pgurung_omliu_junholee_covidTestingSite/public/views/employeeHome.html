@@ -4,8 +4,10 @@
         <title>Employee Home</title>
         <meta charset="utf-8">
 
-         <!-- Importing styling -->
+        <!-- Importing styling -->
         <link rel="stylesheet" href="../css/employeeHome.css">
+        <!-- Importing Bootstrap -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <!-- Importing custom Javascript -->
         <script src="../js/employeeHome.js"></script>
         <!-- Importing jQuery via Google CDN -->
@@ -13,26 +15,42 @@
     </head>
 
     <body>
-        
-        <h1 id="employeeHomeHeader">Employee Home</h1>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/employeeHome">Employee</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="/employeeHome">Results <span class="sr-only">(current)</span></a>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0" action="/employee" method="GET">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log out</button>
+              </form>
+            </div>
+        </nav>
 
-        <table id="resultsTable">
-            <tr id="tableHeader">
-                <th id="collectionDateHeader">Collection Date</th>
-                <th id="resultHeader">Result</th>
-            </tr>
-
-            <% JSON.parse(results).forEach( (row) => { %>
-                <tr>
-                    <td class="collectionDateCell">
-                        <%= row['collectionDate'] %>
-                    </td>
-                    <td class="resultCell">
-                        <%= row['result'] %>
-                    </td>
-                </tr>
-            <% }); %>
-        </table>
-        
+        <div class="container">
+            <table class="table table-bordered" id="resultsTable">
+                <thead class="thead-dark" id="tableHeader">
+                    <th scope="col" id="collectionDateHeader">Collection Date</th>
+                    <th scope="col" id="resultHeader">Result</th>
+                </thead>
+    
+                <% JSON.parse(results).forEach( (row) => { %>
+                    <tr>
+                        <td class="collectionDateCell">
+                            <%= row['collectionDate'] %>
+                        </td>
+                        <td class="resultCell">
+                            <%= row['result'] %>
+                        </td>
+                    </tr>
+                <% }); %>
+            </table>
+        </div>
     </body>
 </html>

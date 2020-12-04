@@ -59,3 +59,10 @@ CREATE TABLE WellTesting (
 	FOREIGN KEY (wellBarcode) REFERENCES Well(wellBarcode),
     FOREIGN KEY (poolBarcode) REFERENCES Pool(poolBarcode)
 );
+
+CREATE VIEW MostRecentTimes AS (
+    SELECT ET.testBarcode, case when MAX(WT.testingEndTime IS NULL) = 0 THEN MAX(WT.testingEndTime) END AS testingEndTime
+    FROM EmployeeTest ET, PoolMap PM, WellTesting WT
+    WHERE ET.testBarcode = PM.testBarcode AND PM.poolBarcode = WT.poolBarcode
+    GROUP BY ET.testBarcode
+);

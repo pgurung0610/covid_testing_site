@@ -22,7 +22,27 @@ function writePost(req, res) {
 
 function submitWell(req) {
     let body = req.body
-    let sql = `INSERT INTO WellTesting VALUES ('${body.poolBarcode}', '${req.body.wellBarcode}', NULL, NULL, '${req.body.result}');`
+    let wellBarcode = body.wellBarcode
+    let poolBarcode = body.poolBarcode
+
+    // get time in the form of 'yyyy-mm-dd hh:mm:ss' "2020-11-14 11:21:00";
+    var d = new Date();
+    var year = d.getFullYear();
+    var month = d.getMonth() + 1; 
+    var day = d.getDate();
+    var s = d.getSeconds();
+    var m = d.getMinutes();
+    var h = d.getHours();
+    
+    var DATETIME = "'" + year + "-" + month + "-" + day + " " + h + ":" + m + ":" + s + "'";
+
+    conn.query(`INSERT INTO Well VALUES ('${wellBarcode}');`, (err, result) => {
+        if (err) {
+            console.log(err)
+        }
+    })
+
+    let sql = `INSERT INTO WellTesting VALUES ('${wellBarcode}', '${poolBarcode}', ${DATETIME}, ${body.result == "in progress" ? "NULL" : DATETIME}, '${body.result}');`
     conn.query(sql, (err) => {
         if (err) {
             console.log(err)
