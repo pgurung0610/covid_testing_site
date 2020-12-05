@@ -14,7 +14,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
 
-    <body>
+    <body onload="setSelect('<%data%>')">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="/labHome">Lab Employee</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,11 +73,13 @@
                     </form>
                     <hr>
 
+                    <form action="/wellTesting" method = "POST">
                     <table class="table table-bordered" id="wellTestingTable">
                         <thead class="thead-dark">
                             <th>Well Barcode</th>
                             <th>Pool Barcode</th>
                             <th>Result</th>
+                            <th>Update Result</th>
                         </thead>
 
                         <% if (data) { %>
@@ -86,13 +88,37 @@
                                     <td><%= data[i].wellBarcode %></td>
                                     <td><%= data[i].poolBarcode %></td>
                                     <td><%= data[i].result %></td>
+                                    <td>
+                                        <select name="newResult" class="editWellTest">
+                                            <%if(data[i].result == "in progress"){%>
+                                                <option value="in progress" selected>in progress</option>
+                                            <% }else{ %> 
+                                                <option value="in progress">in progress</option>
+                                            <% }%>
+                                            <%if(data[i].result == "negative"){%>
+                                                <option value="negative" selected>negative</option>
+                                            <% }else{ %> 
+                                                <option value="negative">negative</option>
+                                            <% }%>
+                                            <%if(data[i].result == "positive"){%>
+                                                <option value="positive" selected>positive</option>
+                                            <% }else{ %> 
+                                                <option value="positive">positive</option>
+                                            <% }%>
+                                            <!-- <option value="negative">negative</option>
+                                            <option value="positive">positive</option> -->
+                                        </select>
+                                    </td>
                                 </tr>
                             <%}%>
                         <% } %>
                     </table>
 
-                    <button class="btn btn-outline-primary">Edit</button>
-                    <button class="btn btn-danger">Delete</button>
+                    <input class="btn btn-outline-primary" type="submit" value="Update Results">
+
+                    <!-- <button class="btn btn-outline-primary">Edit</button>
+                    <button class="btn btn-danger">Delete</button> -->
+                    </form>
                 </div>
             </div>
         </div>
