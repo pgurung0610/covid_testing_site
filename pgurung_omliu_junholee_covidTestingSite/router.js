@@ -143,6 +143,11 @@ router.post('/wellTesting', (req, res) => {
     wellTesting_express.writePost(req, res)
 });
 
+router.post('/wellTestingUpdate', (req, res) => {
+    let wellTesting_express = require('./server/wellTesting_express.js')
+    wellTesting_express.writeUpdatePost(req, res)
+});
+
 // Routes for Employees
 router.get('/employee', (req, res) => {
     req.session.destroy();

@@ -73,26 +73,47 @@
                     </form>
                     <hr>
 
-                    <table class="table table-bordered" id="wellTestingTable">
-                        <thead class="thead-dark">
-                            <th>Well Barcode</th>
-                            <th>Pool Barcode</th>
-                            <th>Result</th>
-                        </thead>
+                    <form action="/wellTestingUpdate" method = "POST">
+                        <table class="table table-bordered" id="wellTestingTable">
+                            <thead class="thead-dark">
+                                <th>Well Barcode</th>
+                                <th>Pool Barcode</th>
+                                <th>Result</th>
+                                <th>Update Result</th>
+                            </thead>
 
-                        <% if (data) { %>
-                            <% for(i = 0; i < data.length; i++){%>
-                                <tr>
-                                    <td><%= data[i].wellBarcode %></td>
-                                    <td><%= data[i].poolBarcode %></td>
-                                    <td><%= data[i].result %></td>
-                                </tr>
-                            <%}%>
-                        <% } %>
-                    </table>
+                            <% if (data) { %>
+                                <% for(i = 0; i < data.length; i++) { %>
+                                    <tr>
+                                        <td><%= data[i].wellBarcode %></td>
+                                        <td><%= data[i].poolBarcode %></td>
+                                        <td><%= data[i].result %></td>
+                                        <td>
+                                            <select name="<%= data[i].wellBarcode %>" class="editWellTest">
+                                                <% if(data[i].result == "in progress") { %>
+                                                    <option value="in progress" selected>in progress</option>
+                                                <% } else { %>
+                                                    <option value="in progress">in progress</option>
+                                                <% } %>
+                                                <% if(data[i].result == "negative") { %>
+                                                    <option value="negative" selected>negative</option>
+                                                <% } else { %>
+                                                    <option value="negative">negative</option>
+                                                <% } %>
+                                                <% if(data[i].result == "positive") { %>
+                                                    <option value="positive" selected>positive</option>
+                                                <% } else { %>
+                                                    <option value="positive">positive</option>
+                                                <% } %>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                <%}%>
+                            <% } %>
+                        </table>
 
-                    <button class="btn btn-outline-primary">Edit</button>
-                    <button class="btn btn-danger">Delete</button>
+                        <input class="btn btn-outline-primary" type="submit" value="Update Results">
+                    </form>
                 </div>
             </div>
         </div>
