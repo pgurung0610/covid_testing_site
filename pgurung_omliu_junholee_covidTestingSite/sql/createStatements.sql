@@ -55,7 +55,7 @@ CREATE TABLE WellTesting (
     testingStartTime DATETIME,
     testingEndTime DATETIME,
     result VARCHAR(11) DEFAULT "in progress",
-    PRIMARY KEY (wellBarcode, poolBarcode),
+    PRIMARY KEY (wellBarcode),
 	FOREIGN KEY (wellBarcode) REFERENCES Well(wellBarcode),
     FOREIGN KEY (poolBarcode) REFERENCES Pool(poolBarcode)
 );
