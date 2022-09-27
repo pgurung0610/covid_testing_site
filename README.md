@@ -1,4 +1,12 @@
-# Project: Covid Testing Site
+# Covid Testing Site
+### Class: CSE316 (Fall 2020)
+### Team Members (3): Jun Ho Lee, Pratik Gurung, Oliver Liu
+
+## Technologies used in this project:
+* Node.js
+* Express.js
+* MySQL
+* EJS
 
 ## Scenario:
 Stony Brook is preparing to start mass weekly testing for all students, faculty and hospital employees (approximately 28K people) using saliva tests. 
@@ -9,9 +17,6 @@ If the well turns out positive, they have to continue testing the remaining sali
 
 From 1 saliva sample, they can dilute it to a fixed maximum number of samples (3-5). Given that the positivity cases rate is 0.97-1.29%, at most 50 samples will be batched together in the first step. 
 We will develop the Web interface for this testing.
-
-## Technologies used in this project:
-Node.js, Express.js, MySQL, EJS
 
 ## How it works:
 ### A] Homepage
@@ -43,8 +48,12 @@ This is where the group of Stony Brook employees are determined if at least one 
         
         .\covid_testing_site\pgurung_omliu_junholee_covidTestingSite
 
-    then on console, type:
-    
+    Then type:
+        
+        # to install dependencies
+        npm install
+        
+        # to run scripts
         node index.js
 
     then on web browser, connect to:
